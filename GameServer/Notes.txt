@@ -1,0 +1,50 @@
+﻿28/6/18
+-ADD Gridindex points in a circle for gravity rotations
+-X,Y topdown Z = Depth
+-combine camera properties into one 'direction' data that can be used to determine facing and rotation
+	eg. facing [0,1,2] with negitives. line 54
+
+
+facing determines what dimension is displayed on the horizontal and vertical, and the position of 0
+facing with 0 rotation
+horizontal, vertical
+x,y Down	(1,1,0)
+x,z forward (1,0,1)
+x,-y up		(1,-1,0)
+-x,z back	(-1,0,1)
+y,z left	(0,1,1)
+-y,z right	(0,-1,1)
+rotation
+0	= h,v 
+90	= -v,h
+180 = -h,-v
+270 = v,-h
+
+||ch*ca		||-ch*sa*cb + sh*sb		||ch*sa*sb + sh*cb
+||sa		||ca*cb					||-ca*sb
+||-sh*ca	||sh*sa*cb + ch*sb		||-sh*sa*sb + ch*cb
+
+sa = sin(attitude)
+ca = cos(attitude)
+sb = sin(bank)
+cb = cos(bank)
+sh = sin(heading)
+ch = cos(heading)
+
+
+5/7/18
+- added all the rotationData basics, gotta work out how to display front view.
+
+8/7/18 
+- added hack ? in gridindex this[] // replace with a method
+
+9/7/18
+- facing is working
+- bankleft is really attitude up
+- need to work out dimension direction
+- need to specify viewport better. work out a way to get z. maybe make port a 3d array.
+
+10/7/18
+- added rotateAround to gridIndex
+- in the middle of changint matrix to matrix3d
+- my matrix doesnt add to its self in order properly

@@ -1,0 +1,60 @@
+﻿            //returns where the xyz should be hvd... 0,1,2
+            int hIndex = obj.RotationData.GetHorizontal();
+            int vIndex = obj.RotationData.GetVertical();
+            int dIndex = obj.RotationData.GetDepth();
+
+            //returns the direction of an axis 1 or -1
+            int hDirection = obj.RotationData.GetHorizontalDirection();
+            int vDirection = obj.RotationData.GetVerticalDirection();
+            int dDirection = obj.RotationData.GetDepthDirection();
+
+            GridIndex objPos = obj.Position;
+            //depth to show
+            int depthIndex = objPos.GetIndexByInt(dIndex) + dDirection;
+            int horizontalIndexStart = objPos.GetIndexByInt(hIndex) - 1;
+            int verticalIndexStart = objPos.GetIndexByInt(vIndex) - 1;
+            int horizontalIndexEnd = objPos.GetIndexByInt(hIndex) + 1;
+            int verticalIndexEnd = objPos.GetIndexByInt(vIndex) + 1;
+
+
+
+            string[,] screen = new string[3, 3];
+            for (int x = 0; x < screen.GetLength(0); x++)
+            {
+                for (int y = 0; y < screen.GetLength(1); y++)
+                {
+                    if (dIndex == 0)
+                    {
+                        if(hIndex == 1)
+                        {
+                            screen[x, y] = world[ depthIndex, horizontalIndexStart + x, verticalIndexStart + y];
+                        }
+                        else
+                        {
+                            screen[x, y] = world[ depthIndex, verticalIndexStart + y, horizontalIndexStart + x ];
+                        }
+                    }
+                    if (dIndex == 1)
+                    {
+                        if (hIndex == 0)
+                        {
+                            screen[x, y] = world[ horizontalIndexStart + x, depthIndex, verticalIndexStart + y];
+                        }
+                        else
+                        {
+                            screen[x, y] = world[ verticalIndexStart + y, depthIndex, horizontalIndexStart + x];
+                        }
+                    }
+                    if (dIndex == 2)
+                    {
+                        if (hIndex == 0)
+                        {
+                            screen[x, y] = world[ horizontalIndexStart + x, verticalIndexStart + y, depthIndex];
+                        }
+                        else
+                        {
+                            screen[x, y] = world[ verticalIndexStart + y, horizontalIndexStart + x, depthIndex];
+                        }
+                    }
+                }
+            }
