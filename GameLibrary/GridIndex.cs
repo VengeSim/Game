@@ -127,47 +127,15 @@ namespace GameLibrary
             }
             return IndexList;
         }
-        
-        public int GetIndexByInt(int index)
-        {
-
-            if (index == 0) { return this.x; }
-            if (index == 1) { return this.y; }
-            if (index == 2) { return this.z; }
-
-            throw new ArgumentOutOfRangeException("GridIndex.GetIndexByInt: 0-2");
-        }
 
         public void RotateAround(GridIndex centerPoint, RotationData rotation)
         {
-            //GridIndex offset = this.GetOffset(centerPoint);
-            //int rotatingPointX = offset.x;
-            //int rotatingPointY = offset.y;
-            //int rotatingPointZ = offset.z;
-
-            int rotatingPointX = this.x;
-            int rotatingPointY = this.y;
-            int rotatingPointZ = this.z;
-
-            int xx = rotatingPointX * rotation.Matrix[0, 0];
-            int xy = rotatingPointX * rotation.Matrix[0, 1];
-            int xz = rotatingPointX * rotation.Matrix[0, 2];
-
-            int yx = rotatingPointY * rotation.Matrix[1, 0];
-            int yy = rotatingPointY * rotation.Matrix[1, 1];
-            int yz = rotatingPointY * rotation.Matrix[1, 2];
-
-            int zx = rotatingPointZ * rotation.Matrix[2, 0];
-            int zy = rotatingPointZ * rotation.Matrix[2, 1];
-            int zz = rotatingPointZ * rotation.Matrix[2, 2];
-
-            int newX = xx + yx + zx;
-            int newY = xy + yy + zy;
-            int newZ = xz + yz + zz;
-
-            this.x = centerPoint.x + newX;
-            this.y = centerPoint.y + newY;
-            this.z = centerPoint.z + newZ;
+            //index must be offset from the center point...
+            GridIndex newIndex = rotation.Matrix * this;
+            
+            this.x = centerPoint.x + newIndex.X;
+            this.y = centerPoint.y + newIndex.Y;
+            this.z = centerPoint.z + newIndex.Z;
         }
 
         public GridIndex GetOffset(GridIndex other)

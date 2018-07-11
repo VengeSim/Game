@@ -1,110 +1,68 @@
 ﻿using System;
-using System.Windows.Media.Media3D;
 
 namespace GameLibrary
 {
     public class RotationData
     {
-        private double heading;
-        private double attitude;
-        private double bank;
-        private int[,] matrix;
+        //Rotations of positive, rotate clockwise looking down the positive axis - to +
 
-        public double Heading { get => heading;}
-        public double Attitude { get => attitude;}
-        public double Bank { get => bank;}
-        public int[,] Matrix { get => matrix;}
+        private double xRotation;
+        private double yRotation;
+        private double zRotation;
+        private Matrix3D matrix;
+
+        public double X { get => xRotation;}
+        public double Y { get => yRotation;}
+        public double Z { get => zRotation;}
+        public Matrix3D Matrix { get => matrix;}
 
         public RotationData()
         {
-            this.heading = 0; //rotate on vertical
-            this.attitude = 0; //rotate on horizontal
-            this.bank = 0; //rotate on depth
+            this.xRotation = 0; //rotate on vertical
+            this.yRotation = 0; //rotate on horizontal
+            this.zRotation = 0; //rotate on depth
 
-            this.matrix = new int[3,3];
-            this.ReCalculateMatrix();
+            this.matrix = new Matrix3D();
+
         }
 
-        private void ReCalculateMatrix()
+        public void RotateXPositive()
         {
-            //|| ch * ca    || -ch * sa * cb + sh * sb  || ch * sa * sb + sh * cb
-            //|| sa         || ca * cb                  || -ca * sb
-            //|| -sh * ca   || sh * sa * cb + ch * sb   || -sh * sa * sb + ch * cb
-
-            //sa = sin(attitude)
-            //ca = cos(attitude)
-            //sb = sin(bank)
-            //cb = cos(bank)
-            //sh = sin(heading)
-            //ch = cos(heading)
-
-            double headingRadians = Math.PI / 180.0 * this.heading ;
-            double attitudeRadians = Math.PI / 180.0 * this.attitude;
-            double bankRadians = Math.PI / 180.0 * this.bank;
-
-            //int[,] newMatrix = new int[3,3];
-
-            this.matrix[0,0] = (int)Math.Round(Math.Cos(headingRadians) * Math.Cos(attitudeRadians));
-            this.matrix[1,0] = (int)Math.Round(-Math.Cos(headingRadians) * Math.Sin(attitudeRadians) * Math.Cos(bankRadians) + Math.Sin(headingRadians) * Math.Sin(bankRadians));
-            this.matrix[2,0] = (int)Math.Round(Math.Cos(headingRadians) * Math.Sin(attitudeRadians) * Math.Sin(bankRadians) + Math.Sin(headingRadians) * Math.Cos(bankRadians));
-
-            this.matrix[0,1] = (int)Math.Round(Math.Sin(attitudeRadians));
-            this.matrix[1,1] = (int)Math.Round(Math.Cos(attitudeRadians) * Math.Cos(bankRadians));
-            this.matrix[2,1] = (int)Math.Round(-Math.Cos(attitudeRadians) * Math.Sin(bankRadians));
-
-            this.matrix[0,2] = (int)Math.Round(-Math.Sin(headingRadians) * Math.Cos(attitudeRadians));
-            this.matrix[1,2] = (int)Math.Round(Math.Sin(headingRadians) * Math.Sin(attitudeRadians) * Math.Cos(bankRadians) + Math.Cos(headingRadians) * Math.Sin(bankRadians));
-            this.matrix[2,2] = (int)Math.Round(-Math.Sin(headingRadians) * Math.Sin(attitudeRadians) * Math.Sin(bankRadians) + Math.Cos(headingRadians) * Math.Cos(bankRadians));
-
-            //this.matrix[0, 0] = this.matrix[0, 0] * newMatrix[0, 0];
-            //this.matrix[1, 0] = this.matrix[1, 0] * newMatrix[1, 0];
-            //this.matrix[2, 0] = this.matrix[2, 0] * newMatrix[2, 0];
-
-            //this.matrix[0, 1] = this.matrix[0, 1] * newMatrix[0, 1];
-            //this.matrix[1, 1] = this.matrix[1, 2] * newMatrix[1, 1];
-            //this.matrix[2, 1] = this.matrix[2, 2] * newMatrix[2, 1];
-
-            //this.matrix[0, 2] = this.matrix[0, 2] * newMatrix[0, 2];
-            //this.matrix[1, 2] = this.matrix[1, 2] * newMatrix[1, 2];
-            //this.matrix[2, 2] = this.matrix[2, 2] * newMatrix[2, 2];
+            this.xRotation = this.xRotation + 90;
+            if(this.xRotation >= 360) { this.xRotation = this.xRotation - 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundX(90);
         }
-
-        public void HeadingLeft()
+        public void RotateXNegitive()
         {
-            this.heading = this.heading + 90;
-            if(this.heading >= 360) { this.heading = this.heading - 360; }
-            this.ReCalculateMatrix();
+            this.xRotation = this.xRotation - 90;
+            if (this.xRotation < 0) { this.xRotation = this.xRotation + 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundX(-90);
         }
-        public void HeadingRight()
+        public void RotateYPositive()
         {
-            this.heading = this.heading - 90;
-            if (this.heading < 0) { this.heading = this.heading + 360; }
-            this.ReCalculateMatrix();
+            this.yRotation = this.yRotation + 90;
+            if (this.yRotation >= 360) { this.yRotation = this.yRotation - 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundY(90);
         }
-        public void AttitudeUp()
+        public void RotateYNegitive()
         {
-            this.attitude = this.attitude + 90;
-            if (this.attitude >= 360) { this.attitude = this.attitude - 360; }
-            this.ReCalculateMatrix();
+            this.yRotation = this.yRotation - 90;
+            if (this.yRotation < 0) { this.yRotation = this.yRotation + 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundY(-90);
         }
-        public void AttitudeDown()
+        public void RotateZPositive()
         {
-            this.attitude = this.attitude - 90;
-            if (this.attitude < 0) { this.attitude = this.attitude + 360; }
-            this.ReCalculateMatrix();
+            this.zRotation = this.zRotation + 90;
+            if (this.zRotation >= 360) { this.zRotation = this.zRotation - 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundZ(90);
         }
-        public void BankLeft()
+        public void RotateZNegitive()
         {
-            this.bank = this.bank + 90;
-            if (this.bank >= 360) { this.bank = this.bank - 360; }
-            this.ReCalculateMatrix();
-        }
-        public void BankRight()
-        {
-            this.bank = this.bank - 90;
-            if (this.bank < 0) { this.bank = this.bank + 360; }
-            this.ReCalculateMatrix();
+            this.zRotation = this.zRotation - 90;
+            if (this.zRotation < 0) { this.zRotation = this.zRotation + 360; }
+            this.matrix = this.matrix * Matrix3D.NewRotateFromDegreesAroundZ(-90);
         }
 
+        
     }
 }

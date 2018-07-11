@@ -48,3 +48,6 @@ ch = cos(heading)
 - added rotateAround to gridIndex
 - in the middle of changint matrix to matrix3d
 - my matrix doesnt add to its self in order properly
+
+11/7/18
+- removed old matrix and added new class Matrix3D

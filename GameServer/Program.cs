@@ -27,8 +27,8 @@ namespace GameServer
 
             GameObject obj = new GameObject(new GridIndex(1, 1, 1));
 
-            //obj.RotationData.HeadingRight();
-            //obj.RotationData.BankLeft();
+            obj.RotationData.RotateXPositive();
+            obj.RotationData.RotateYPositive();
 
             GridIndex[] frontViewPositions = new GridIndex[9];
             frontViewPositions[0] = new GridIndex(-1, 1, 1);
@@ -53,9 +53,9 @@ namespace GameServer
             string[,] screen = new string[3, 3];
 
 
-            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix[0, 0], obj.RotationData.Matrix[1, 0], obj.RotationData.Matrix[2, 0]);
-            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix[0, 1], obj.RotationData.Matrix[1, 1], obj.RotationData.Matrix[2, 1]);
-            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix[0, 2], obj.RotationData.Matrix[1, 2], obj.RotationData.Matrix[2, 2]);
+            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix.Matrix[0, 0], obj.RotationData.Matrix.Matrix[1, 0], obj.RotationData.Matrix.Matrix[2, 0]);
+            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix.Matrix[0, 1], obj.RotationData.Matrix.Matrix[1, 1], obj.RotationData.Matrix.Matrix[2, 1]);
+            Console.WriteLine("{0}#{1}#{2}", obj.RotationData.Matrix.Matrix[0, 2], obj.RotationData.Matrix.Matrix[1, 2], obj.RotationData.Matrix.Matrix[2, 2]);
 
             Console.WriteLine("{0}#{1}#{2}", screen[0, 2], screen[1, 2], screen[2, 2]);
             Console.WriteLine("{0}#{1}#{2}", screen[0, 1], screen[1, 1], screen[2, 1]);
