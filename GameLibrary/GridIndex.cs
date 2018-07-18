@@ -128,7 +128,7 @@ namespace GameLibrary
             return IndexList;
         }
 
-        public void RotateAround(GridIndex centerPoint, RotationData rotation)
+        public GridIndex RotateAround(GridIndex centerPoint, RotationData rotation)
         {
             //index must be offset from the center point...
             GridIndex newIndex = rotation.Matrix * this;
@@ -136,6 +136,7 @@ namespace GameLibrary
             this.x = centerPoint.x + newIndex.X;
             this.y = centerPoint.y + newIndex.Y;
             this.z = centerPoint.z + newIndex.Z;
+            return this;
         }
 
         public GridIndex GetOffset(GridIndex other)

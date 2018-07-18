@@ -4,11 +4,11 @@ namespace GameLibrary
 {
     public class RotationData
     {
-        //Rotations of positive, rotate clockwise looking down the positive axis - to +
+        
 
-        private double xRotation;
-        private double yRotation;
-        private double zRotation;
+        private double xRotation; //clockwise
+        private double yRotation; //counter clockwise
+        private double zRotation; //clockwise
         private Matrix3D matrix;
 
         public double X { get => xRotation;}
@@ -18,9 +18,9 @@ namespace GameLibrary
 
         public RotationData()
         {
-            this.xRotation = 0; //rotate on vertical
-            this.yRotation = 0; //rotate on horizontal
-            this.zRotation = 0; //rotate on depth
+            this.xRotation = 0;
+            this.yRotation = 0;
+            this.zRotation = 0;
 
             this.matrix = new Matrix3D();
 

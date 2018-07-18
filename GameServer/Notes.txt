@@ -51,3 +51,7 @@ ch = cos(heading)
 
 11/7/18
 - removed old matrix and added new class Matrix3D
+- matrix tests ok
+
+12/7/18
+- region >> zone >> sector >> grindIndex
